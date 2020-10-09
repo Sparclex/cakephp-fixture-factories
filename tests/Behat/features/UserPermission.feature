@@ -4,7 +4,7 @@ Feature: User permission
    Given I create a user with id 1
 
   Scenario:
-    And I log in with permission 'Users'
+    Given I log in with permission 'Users'
     When I call get 'users/view/1'
     Then I shall be granted access.
 
