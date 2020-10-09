@@ -15,10 +15,19 @@ declare(strict_types=1);
 namespace TestApp\Controller;
 
 
+use TestApp\Model\Table\PermissionsTable;
+
 class PermissionsController extends AppController
 {
+    /**
+     * @var PermissionsTable
+     */
+    public $Permissions;
+
     public function view($id)
     {
+        $this->loadModel('Permissions');
+        $permission = $this->Permissions->get($id);
         $this->disableAutoRender();
     }
 }

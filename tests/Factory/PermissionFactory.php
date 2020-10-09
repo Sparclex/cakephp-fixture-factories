@@ -28,7 +28,7 @@ class PermissionFactory extends BaseFactory
         $this
             ->setDefaultData(function(Generator $faker) {
                 return [
-                    'name'          => $faker->words(),
+                    'name' => $faker->word(),
                 ];
             });
     }

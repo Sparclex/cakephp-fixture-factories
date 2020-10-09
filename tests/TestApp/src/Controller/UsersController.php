@@ -19,6 +19,7 @@ class UsersController extends AppController
 {
     public function view($id)
     {
+        $user = $this->Users->get($id);
         $this->disableAutoRender();
     }
 }

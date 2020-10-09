@@ -3,10 +3,10 @@
 namespace CakephpFixtureFactories\Test\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use CakephpFixtureFactories\Test\Factory\PermissionFactory;
 use CakephpFixtureFactories\Test\Factory\UserFactory;
 use CakephpTestSuiteLight\FixtureInjector;
 use CakephpTestSuiteLight\FixtureManager;
@@ -29,25 +29,16 @@ class FeatureContext extends TestCase implements Context
         $this->fixtureInjector = new FixtureInjector(new FixtureManager());
     }
 
-    /**
-     * @BeforeSuite
-     */
-    public static function setUpBeforeSuite(): void
-    {
-//        Configure::write('TestFixtureNamespace', 'CakephpFixtureFactories\Test\Factory');
-    }
-
     /** @BeforeScenario */
     public function beforeScenario(): void
     {
         $this->fixtureInjector->startTest($this);
     }
 
-    /** @AfterScenario */
-    public function afterScenario(): void
-    {}
-
-    public function logUser(EntityInterface $user)
+    /**
+     * @param EntityInterface $user
+     */
+    public function logUserIn(EntityInterface $user)
     {
         $this->session([
             'Auth' => [
@@ -57,12 +48,30 @@ class FeatureContext extends TestCase implements Context
     }
 
     /**
+     * @Given I create a user with id :id
+     * @param int $id
+     */
+    public function persistUser(int $id)
+    {
+        UserFactory::make(compact('id'))->persist();
+    }
+
+    /**
+     * @Given I create a permission with id :id
+     * @param int $id
+     */
+    public function persistPermission(int $id)
+    {
+        PermissionFactory::make(compact('id'))->persist();
+    }
+
+    /**
      * @Given I log in with permission :permission
      * @param string $permission
      */
     public function logUserInWithPermission(string $permission)
     {
-        $this->logUser(
+        $this->logUserIn(
             UserFactory::make()->withPermission($permission)->getEntity()
         );
     }
@@ -74,7 +83,7 @@ class FeatureContext extends TestCase implements Context
      */
     public function logUserInWithPermissions(string $permission1, string $permission2)
     {
-        $this->logUser(
+        $this->logUserIn(
             UserFactory::make()
                 ->withPermission($permission1)
                 ->withPermission($permission2)
@@ -94,7 +103,7 @@ class FeatureContext extends TestCase implements Context
     /**
      * @Then I shall be granted access.
      */
-    public function assertHasAccess()
+    public function assertAccessGranted()
     {
         $this->assertResponseOk();
     }
@@ -102,7 +111,7 @@ class FeatureContext extends TestCase implements Context
     /**
      * @Then I shall be redirected.
      */
-    public function assertHasNoAccess()
+    public function assertRedirected()
     {
         $this->assertResponseCode(302);
     }
