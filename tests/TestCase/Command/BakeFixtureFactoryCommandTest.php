@@ -47,7 +47,10 @@ class BakeFixtureFactoryCommandTest extends TestCaseWithFixtureBaking
         'Authors',
         'Cities',
         'Countries',
+        'Permissions',
         'PremiumAuthors',
+        'UsersGroups',
+        'Users',
     ];
 
     public $pluginTables = [

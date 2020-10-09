@@ -22,6 +22,7 @@
         "vierge-noire/cakephp-test-suite-light": "^2.0"
     },
     "require-dev": {
+        "behat/behat": "^3.8@dev",
         "cakephp/bake": "^2.0",
         "phpstan/phpstan": "^0.12.48@dev",
         "phpunit/phpunit": "^8.0",

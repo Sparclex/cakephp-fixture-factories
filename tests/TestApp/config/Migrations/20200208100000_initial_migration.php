@@ -120,6 +120,75 @@ class InitialMigration extends AbstractMigration
         $this->table('cities')
             ->addForeignKey('country_id', 'countries', 'id', ['delete'=>'RESTRICT', 'update'=>'CASCADE'])
             ->save();
+
+        $this->table('users')
+            ->addPrimaryKey(['id'])
+            ->addColumn('name', 'string', [
+                'limit' => 128,
+                'null' => false,
+            ])
+            ->addColumn('email', 'string', [
+                'null' => false,
+            ])
+            ->addColumn('password', 'string', [
+                'null' => false,
+            ])
+            ->addTimestamps('created', 'modified')
+            ->create();
+
+        $this->table('users_groups')
+            ->addPrimaryKey(['id'])
+            ->addColumn('name', 'string', [
+                'limit' => 128,
+                'null' => false,
+            ])
+            ->addTimestamps('created', 'modified')
+            ->create();
+
+        $this->table('users_users_groups')
+            ->addColumn('user_id', 'integer', [
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('user_group_id', 'integer', [
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addIndex([
+                'user_id',
+            ])
+            ->addIndex([
+                'user_group_id',
+            ])
+            ->create();
+
+        $this->table('permissions_users_groups')
+            ->addColumn('permission_id', 'integer', [
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('user_group_id', 'integer', [
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addIndex([
+                'permission_id',
+            ])
+            ->addIndex([
+                'user_group_id',
+            ])
+            ->create();
+
+        $this->table('permissions')
+            ->addPrimaryKey(['id'])
+            ->addColumn('name', 'string', [
+                'limit' => 128,
+                'null' => false,
+            ])
+            ->addTimestamps('created', 'modified')
+            ->create();
+
+
     }
 
     public function down()
@@ -130,5 +199,10 @@ class InitialMigration extends AbstractMigration
         $this->table('addresses')->drop();
         $this->table('cities')->drop();
         $this->table('countries')->drop();
+        $this->table('users')->drop();
+        $this->table('permissions')->drop();
+        $this->table('users_groups')->drop();
+        $this->table('permissions_users_groups')->drop();
+        $this->table('users_users_groups')->drop();
     }
 }

@@ -38,3 +38,4 @@ else
 fi
 
 ./vendor/bin/phpunit
+./vendor/bin/behat --config tests/Behat/config.yml

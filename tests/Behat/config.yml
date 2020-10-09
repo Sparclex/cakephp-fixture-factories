@@ -1,0 +1,10 @@
+#behat.yml
+default:
+  autoload:
+    - '%paths.base%/bootstrap/'
+  suites:
+    default:
+      paths:
+        - '%paths.base%/features'
+      contexts:
+        - CakephpFixtureFactories\Test\Behat\Context\FeatureContext

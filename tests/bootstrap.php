@@ -16,6 +16,7 @@ use Cake\Cache\Cache;
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Error\ExceptionRenderer;
 use Cake\Log\Log;
 use Cake\Utility\Inflector;
 use Cake\Utility\Security;
@@ -65,8 +66,10 @@ mb_internal_encoding('UTF-8');
 Configure::write('debug', true);
 Configure::write('App', [
     'namespace' => 'TestApp',
+    'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
+    'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
     'encoding' => 'UTF-8',
-    'base' => false,
+    'base' => '',
     'baseUrl' => false,
     'dir' => APP_DIR,
     'webroot' => 'webroot',
@@ -85,6 +88,14 @@ Configure::write('App', [
         ],
         'locales' => [TEST_APP . 'resources' . DS . 'locales' . DS],
     ],
+]);
+
+Configure::write('Error', [
+    'errorLevel' => E_ALL,
+    'exceptionRenderer' => ExceptionRenderer::class,
+    'skipLog' => [],
+    'log' => true,
+    'trace' => true,
 ]);
 
 Cache::setConfig([
@@ -164,19 +175,13 @@ Log::setConfig([
 Chronos::setTestNow(Chronos::now());
 Security::setSalt('a-long-but-not-random-value');
 
-ini_set('intl.default_locale', 'en_US');
-ini_set('session.gc_divisor', '1');
+//ini_set('intl.default_locale', 'en_US');
+//ini_set('session.gc_divisor', '1');
 
 // Fixate sessionid early on, as php7.2+
 // does not allow the sessionid to be set after stdout
 // has been written to.
 session_id('cli');
-
-Inflector::rules('irregular', array(
-    'contacthrdata' => 'contacthrdatas',
-    'debttranche' => 'debttranches',
-    'tranche' => 'tranches',
-));
 
 Inflector::rules('singular', ['/(ss)$/i' => '\1']);
 
