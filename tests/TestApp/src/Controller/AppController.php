@@ -16,7 +16,7 @@ namespace TestApp\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\EventInterface;
-use CakephpFixtureFactories\Test\TestApp\Model\Table\UsersTable;
+use TestApp\Model\Table\UsersTable;
 
 class AppController extends Controller
 {
@@ -30,7 +30,6 @@ class AppController extends Controller
         $this->loadModel('Users');
     }
 
-
     public function beforeFilter(EventInterface $event)
     {
         $user = $this->getRequest()->getSession()->read('Auth.User');
@@ -39,6 +38,5 @@ class AppController extends Controller
         if (!$this->Users->hasPermission($user, $controller)) {
             return $this->redirect('home');
         }
-
     }
 }

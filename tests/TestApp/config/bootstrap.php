@@ -7,14 +7,6 @@ use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Routing\Router;
 
- if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-     $dotenv->parse()
-         ->putenv()
-         ->toEnv()
-         ->toServer();
- }
-
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
