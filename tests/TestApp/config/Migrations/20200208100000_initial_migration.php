@@ -123,7 +123,7 @@ class InitialMigration extends AbstractMigration
 
         $this->table('users')
             ->addPrimaryKey(['id'])
-            ->addColumn('name', 'string', [
+            ->addColumn('username', 'string', [
                 'limit' => 128,
                 'null' => false,
             ])
@@ -150,7 +150,7 @@ class InitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => false,
             ])
-            ->addColumn('user_group_id', 'integer', [
+            ->addColumn('users_group_id', 'integer', [
                 'limit' => 11,
                 'null' => false,
             ])
@@ -158,7 +158,7 @@ class InitialMigration extends AbstractMigration
                 'user_id',
             ])
             ->addIndex([
-                'user_group_id',
+                'users_group_id',
             ])
             ->create();
 
@@ -167,7 +167,7 @@ class InitialMigration extends AbstractMigration
                 'limit' => 11,
                 'null' => false,
             ])
-            ->addColumn('user_group_id', 'integer', [
+            ->addColumn('users_group_id', 'integer', [
                 'limit' => 11,
                 'null' => false,
             ])
@@ -175,7 +175,7 @@ class InitialMigration extends AbstractMigration
                 'permission_id',
             ])
             ->addIndex([
-                'user_group_id',
+                'users_group_id',
             ])
             ->create();
 

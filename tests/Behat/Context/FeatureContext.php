@@ -3,6 +3,7 @@
 namespace CakephpFixtureFactories\Test\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -27,6 +28,7 @@ class FeatureContext extends TestCase implements Context
     {
         require_once __DIR__ . DS . '..' . DS . 'bootstrap.php';
         $this->fixtureInjector = new FixtureInjector(new FixtureManager());
+        Configure::write('TestFixtureNamespace', 'CakephpFixtureFactories\Test\Factory');
     }
 
     /** @BeforeScenario */

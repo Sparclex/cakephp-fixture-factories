@@ -28,7 +28,7 @@ class UserFactory extends BaseFactory
         $this
             ->setDefaultData(function(Generator $faker) {
                 return [
-                    'name'          => $faker->userName,
+                    'username'      => $faker->userName,
                     'email'         => $faker->email,
                     'password'      => $faker->password,
                 ];
